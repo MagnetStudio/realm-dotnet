@@ -778,7 +778,7 @@ namespace Realms
             }
         }
 
-        // strange as it may seem, this is also called for the LHS when simply iterating All<T>()
+        // strange as it may seem, this is also called for the LHS when simply iterating GetAll<T>()
         internal override Expression VisitConstant(ConstantExpression c)
         {
             var results = c.Value as IRealmResults;

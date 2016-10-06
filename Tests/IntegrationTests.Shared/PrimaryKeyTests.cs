@@ -1,4 +1,4 @@
-﻿////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 //
 // Copyright 2016 Realm Inc.
 //
@@ -55,7 +55,7 @@ namespace IntegrationTests.Shared
                 obj.CharProperty = 'x';
             });
 
-            var foundObj = _realm.ObjectForPrimaryKey<PrimaryKeyCharObject>('x');
+            var foundObj = _realm.Find<PrimaryKeyCharObject>('x');
             Assert.IsNotNull(foundObj);
             Assert.That(foundObj.CharProperty, Is.EqualTo('x'));
         }
@@ -69,7 +69,7 @@ namespace IntegrationTests.Shared
                 obj.ByteProperty = 42;
             });
 
-            var foundObj = _realm.ObjectForPrimaryKey<PrimaryKeyByteObject>(42);
+            var foundObj = _realm.Find<PrimaryKeyByteObject>(42);
             Assert.IsNotNull(foundObj);
             Assert.That(foundObj.ByteProperty, Is.EqualTo(42));
         }
@@ -83,7 +83,7 @@ namespace IntegrationTests.Shared
                 obj.Int16Property = 4242;
             });
 
-            var foundObj = _realm.ObjectForPrimaryKey<PrimaryKeyInt16Object>(4242);
+            var foundObj = _realm.Find<PrimaryKeyInt16Object>(4242);
             Assert.IsNotNull(foundObj);
             Assert.That(foundObj.Int16Property, Is.EqualTo(4242));
         }
@@ -97,7 +97,7 @@ namespace IntegrationTests.Shared
                 obj.Int32Property = 42000042;
             });
 
-            var foundObj = _realm.ObjectForPrimaryKey<PrimaryKeyInt32Object>(42000042);
+            var foundObj = _realm.Find<PrimaryKeyInt32Object>(42000042);
             Assert.IsNotNull(foundObj);
             Assert.That(foundObj.Int32Property, Is.EqualTo(42000042));
         }
@@ -111,7 +111,7 @@ namespace IntegrationTests.Shared
                 obj.Int64Property = 42000042;
             });
 
-            var foundObj = _realm.ObjectForPrimaryKey<PrimaryKeyInt64Object>(42000042);
+            var foundObj = _realm.Find<PrimaryKeyInt64Object>(42000042);
             Assert.IsNotNull(foundObj);
             Assert.That(foundObj.Int64Property, Is.EqualTo(42000042));
         }
@@ -119,7 +119,7 @@ namespace IntegrationTests.Shared
         [Test]
         public void DontFindByInt64PrimaryKey()
         {
-            var foundObj = _realm.ObjectForPrimaryKey<PrimaryKeyInt64Object>(3);
+            var foundObj = _realm.Find<PrimaryKeyInt64Object>(3);
             Assert.IsNull(foundObj);
         }
 
@@ -132,7 +132,7 @@ namespace IntegrationTests.Shared
                 obj.StringProperty = "Zaphod";
             });
 
-            var foundObj = _realm.ObjectForPrimaryKey<PrimaryKeyStringObject>("Zaphod");
+            var foundObj = _realm.Find<PrimaryKeyStringObject>("Zaphod");
             Assert.IsNotNull(foundObj);
             Assert.That(foundObj.StringProperty, Is.EqualTo("Zaphod"));
         }
@@ -140,7 +140,7 @@ namespace IntegrationTests.Shared
         [Test]
         public void DontFindByStringPrimaryKey()
         {
-            var foundObj = _realm.ObjectForPrimaryKey<PrimaryKeyStringObject>("Ford");
+            var foundObj = _realm.Find<PrimaryKeyStringObject>("Ford");
             Assert.IsNull(foundObj);
         }
 
@@ -153,7 +153,7 @@ namespace IntegrationTests.Shared
                 obj.Int64Property = 42000042;
             });
 
-            dynamic foundObj = _realm.ObjectForPrimaryKey("PrimaryKeyInt64Object", 42000042);
+            dynamic foundObj = _realm.Find("PrimaryKeyInt64Object", 42000042);
             Assert.IsNotNull(foundObj);
             Assert.That(foundObj.Int64Property, Is.EqualTo(42000042));
         }
@@ -161,7 +161,7 @@ namespace IntegrationTests.Shared
         [Test]
         public void DontFindDynamicByInt64PrimaryKey()
         {
-            dynamic foundObj = _realm.ObjectForPrimaryKey("PrimaryKeyInt64Object", 33);
+            dynamic foundObj = _realm.Find("PrimaryKeyInt64Object", 33);
             Assert.IsNull(foundObj);
         }
 
@@ -174,7 +174,7 @@ namespace IntegrationTests.Shared
                 obj.StringProperty = "Zaphod";
             });
 
-            dynamic foundObj = _realm.ObjectForPrimaryKey("PrimaryKeyStringObject", "Zaphod");
+            dynamic foundObj = _realm.Find("PrimaryKeyStringObject", "Zaphod");
             Assert.IsNotNull(foundObj);
             Assert.That(foundObj.StringProperty, Is.EqualTo("Zaphod"));
         }
@@ -182,7 +182,7 @@ namespace IntegrationTests.Shared
         [Test]
         public void DontFindDynamicByStringPrimaryKey()
         {
-            dynamic foundObj = _realm.ObjectForPrimaryKey("PrimaryKeyStringObject", "Dent");
+            dynamic foundObj = _realm.Find("PrimaryKeyStringObject", "Dent");
             Assert.IsNull(foundObj);
         }
 
@@ -191,7 +191,7 @@ namespace IntegrationTests.Shared
         {
             Assert.Throws<RealmClassLacksPrimaryKeyException>(() =>
             {
-                var foundObj = _realm.ObjectForPrimaryKey<Person>("Zaphod");
+                var foundObj = _realm.Find<Person>("Zaphod");
             });
         }
 
@@ -200,7 +200,7 @@ namespace IntegrationTests.Shared
         {
             Assert.Throws<RealmClassLacksPrimaryKeyException>(() =>
             {
-                var foundObj = _realm.ObjectForPrimaryKey("Person", "Zaphod");
+                var foundObj = _realm.Find("Person", "Zaphod");
             });
         }
 
@@ -220,7 +220,7 @@ namespace IntegrationTests.Shared
             {
                 using (var realm2 = Realm.GetInstance())
                 {
-                    var foundObj = realm2.ObjectForPrimaryKey<PrimaryKeyInt64Object>(42000042);
+                    var foundObj = realm2.Find<PrimaryKeyInt64Object>(42000042);
                     foundValue = foundObj.Int64Property;
                 }
             });
@@ -276,7 +276,7 @@ namespace IntegrationTests.Shared
             var skinny = Realm.GetInstance(conf);
             Assert.Throws<KeyNotFoundException>(() =>
             {
-                var obj = skinny.ObjectForPrimaryKey<PrimaryKeyInt64Object>(42);
+                var obj = skinny.Find<PrimaryKeyInt64Object>(42);
             });
         }
     }
