@@ -41,11 +41,6 @@ namespace Realms
     [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass")]
     public class RealmList<T> : IList<T>, IRealmList, IDynamicMetaObjectProvider where T : RealmObject
     {
-        /// <summary>
-        /// Value returned by IndexOf if an item is not found.
-        /// </summary>
-        public const int ITEM_NOT_FOUND = -1;
-
         #region implementing IList properties
 
         /// <summary>
@@ -158,7 +153,7 @@ namespace Realms
         /// Finds an ordinal index for an item in a relationship.
         /// </summary>
         /// <param name="item">RealmObject being removed from the relationship.</param>
-        /// <returns>0-based index if the item was found in the related set, or RealmList.ITEM_NOT_FOUND.</returns>
+        /// <returns>0-based index if the item was found in the related set, -1 otherwise.</returns>
         public int IndexOf(T item)
         {
             RealmPCLHelpers.ThrowProxyShouldNeverBeUsed();
