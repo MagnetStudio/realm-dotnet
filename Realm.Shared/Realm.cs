@@ -115,7 +115,7 @@ namespace Realms
             var configuration = new Native.Configuration
             {
                 Path = config.DatabasePath,
-                read_only = config.ReadOnly,
+                read_only = config.IsReadOnly,
                 delete_if_migration_needed = config.ShouldDeleteIfMigrationNeeded,
                 schema_version = config.SchemaVersion
             };
@@ -394,7 +394,7 @@ namespace Realms
         /// <summary>
         /// Factory for a managed object in a realm. Only valid within a Write transaction.
         /// </summary>
-        /// <remarks>Using CreateObject is more efficient than creating standalone objects, assigning their values, then using Manage because it avoids copying properties to the realm.</remarks>
+        /// <remarks>Using CreateObject is more efficient than creating standalone objects, assigning their values, then using Add because it avoids copying properties to the realm.</remarks>
         /// <typeparam name="T">The Type T must be a RealmObject.</typeparam>
         /// <returns>An object which is already managed.</returns>
         /// <exception cref="RealmOutsideTransactionException">If you invoke this when there is no write Transaction active on the realm.</exception>
@@ -502,7 +502,7 @@ namespace Realms
         /// <exception cref="RealmOutsideTransactionException">If you invoke this when there is no write Transaction active on the realm.</exception>
         /// <exception cref="RealmObjectAlreadyManagedByRealmException">You can't manage the same object twice. This exception is thrown, rather than silently detecting the mistake, to help you debug your code</exception>
         /// <exception cref="RealmObjectManagedByAnotherRealmException">You can't manage an object with more than one realm</exception>
-        public void Manage<T>(T obj) where T : RealmObject
+        public void Add<T>(T obj) where T : RealmObject
         {
             if (obj == null)
             {
@@ -936,6 +936,20 @@ namespace Realms
         public RealmObject ObjectForPrimaryKey(string className, string id)
         {
             return Find(className, id);
+        }
+
+        [Obsolete("This method has been renamed. Use Add for the same results.")]
+        /// <summary>
+        /// This realm will start managing a RealmObject which has been created as a standalone object.
+        /// </summary>
+        /// <typeparam name="T">The Type T must not only be a RealmObject but also have been processed by the Fody weaver, so it has persistent properties.</typeparam>
+        /// <param name="obj">Must be a standalone object, null not allowed.</param>
+        /// <exception cref="RealmOutsideTransactionException">If you invoke this when there is no write Transaction active on the realm.</exception>
+        /// <exception cref="RealmObjectAlreadyManagedByRealmException">You can't manage the same object twice. This exception is thrown, rather than silently detecting the mistake, to help you debug your code</exception>
+        /// <exception cref="RealmObjectManagedByAnotherRealmException">You can't manage an object with more than one realm</exception>
+        public void Manage<T>(T obj) where T : RealmObject
+        {
+            Add(obj);
         }
 
         #endregion

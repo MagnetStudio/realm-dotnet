@@ -379,7 +379,7 @@ namespace IntegrationTests.Shared
 
             using (var trans = realm.BeginWrite())
             {
-                realm.Manage(person);
+                realm.Add(person);
                 trans.Commit();
             }
 
@@ -414,7 +414,7 @@ namespace IntegrationTests.Shared
 
             using (var trans = realm.BeginWrite())
             {
-                realm.Manage(sally); // top person Managees entire tree
+                realm.Add(sally); // top person Managees entire tree
                 trans.Commit();
             }
 
@@ -442,7 +442,7 @@ namespace IntegrationTests.Shared
 
             using (var trans = realm.BeginWrite())
             {
-                realm.Manage(sally);  // top person Managees entire tree
+                realm.Add(sally);  // top person Managees entire tree
                 sally.Friends[1].Friends.Add(joanFriend);
 
                 trans.Commit();

@@ -260,7 +260,7 @@ namespace IntegrationTests
         {
             // Arrange
             var config = new RealmConfiguration("FileNotThere.realm");
-            config.ReadOnly = true;
+            config.IsReadOnly = true;
 
             // Assert
             Assert.Throws<RealmFileNotFoundException>(() =>
@@ -275,7 +275,7 @@ namespace IntegrationTests
             // Arrange
             var config = new RealmConfiguration("WillBeReadonly.realm");
             Realm.DeleteRealm(config);  // ensure start clean
-            config.ReadOnly = true;
+            config.IsReadOnly = true;
             config.SchemaVersion = 42;
             TestHelpers.CopyBundledDatabaseToDocuments(
                 "ForMigrationsToCopyAndMigrate.realm", "WillBeReadonly.realm");
@@ -302,7 +302,7 @@ namespace IntegrationTests
                 });
             }
 
-            config.ReadOnly = true;
+            config.IsReadOnly = true;
 
             using (var openedReadonly = Realm.GetInstance(config))
             {

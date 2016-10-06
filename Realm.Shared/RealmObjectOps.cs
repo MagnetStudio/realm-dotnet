@@ -50,7 +50,7 @@ namespace Realms
             {
                 if (!@object.IsManaged)
                 {
-                    realm.Manage(@object);
+                    realm.Add(@object);
                 }
 
                 NativeTable.SetLink(table, columnIndex, rowIndex, @object.RowHandle.RowIndex);
