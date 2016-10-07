@@ -19,6 +19,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Dynamic;
 
 namespace Realms
@@ -35,7 +36,7 @@ namespace Realms
     /// </remarks>
     /// <typeparam name="T">Type of the RealmObject which is the target of the relationship.</typeparam>
     [Preserve(AllMembers = true)]
-    public class RealmList<T> : IList<T>, IRealmList, IDynamicMetaObjectProvider where T : RealmObject
+    internal class RealmList<T> : IList<T>, IRealmList, IDynamicMetaObjectProvider where T : RealmObject
     {
         public class Enumerator : IEnumerator<T>
         {
@@ -177,7 +178,7 @@ namespace Realms
         /// <param name="item">RealmObject being added to the relationship.</param>
         public void Add(T item)
         {
-            this.ManageObjectIfNeeded(item);
+            this.AddObjectIfNeeded(item);
             var rowIndex = item.RowHandle.RowIndex;
             _listHandle.Add(rowIndex);
         }
@@ -269,7 +270,7 @@ namespace Realms
                 throw new ArgumentOutOfRangeException();
             }
 
-            this.ManageObjectIfNeeded(item);
+            this.AddObjectIfNeeded(item);
             var rowIndex = item.RowHandle.RowIndex;
             _listHandle.Insert((IntPtr)index, rowIndex);
         }
@@ -310,7 +311,7 @@ namespace Realms
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        private void ManageObjectIfNeeded(T obj)
+        private void AddObjectToRealmIfNeeded(T obj)
         {
             if (!obj.IsManaged)
             {

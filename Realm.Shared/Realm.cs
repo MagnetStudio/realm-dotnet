@@ -428,7 +428,7 @@ namespace Realms
             var rowPtr = NativeTable.AddEmptyRow(metadata.Table);
             var rowHandle = CreateRowHandle(rowPtr, SharedRealmHandle);
 
-            result._Manage(this, rowHandle, metadata);
+            result._SetOwner(this, rowHandle, metadata);
             return result;
         }
 
@@ -450,7 +450,7 @@ namespace Realms
         internal RealmObject MakeObjectForRow(RealmObject.Metadata metadata, RowHandle row)
         {
             var ret = metadata.Helper.CreateInstance();
-            ret._Manage(this, row, metadata);
+            ret._SetOwner(this, row, metadata);
             return ret;
         }
 
@@ -516,7 +516,7 @@ namespace Realms
             var rowPtr = NativeTable.AddEmptyRow(tableHandle);
             var rowHandle = CreateRowHandle(rowPtr, SharedRealmHandle);
 
-            obj._Manage(this, rowHandle, metadata);
+            obj._SetOwner(this, rowHandle, metadata);
             obj._CopyDataFromBackingFieldsToRow();
         }
 
