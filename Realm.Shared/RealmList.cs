@@ -19,7 +19,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Dynamic;
 
 namespace Realms
@@ -178,7 +177,7 @@ namespace Realms
         /// <param name="item">RealmObject being added to the relationship.</param>
         public void Add(T item)
         {
-            this.AddObjectIfNeeded(item);
+            this.AddObjectToRealmIfNeeded(item);
             var rowIndex = item.RowHandle.RowIndex;
             _listHandle.Add(rowIndex);
         }
@@ -270,7 +269,7 @@ namespace Realms
                 throw new ArgumentOutOfRangeException();
             }
 
-            this.AddObjectIfNeeded(item);
+            this.AddObjectToRealmIfNeeded(item);
             var rowIndex = item.RowHandle.RowIndex;
             _listHandle.Insert((IntPtr)index, rowIndex);
         }

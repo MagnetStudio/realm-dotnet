@@ -442,11 +442,10 @@ namespace Realms
         /// <returns>Null or an object matching the id.</returns>
         /// <exception cref="RealmClassLacksPrimaryKeyException">If the RealmObject class T lacks an [PrimaryKey].</exception>
         [Obsolete("This method has been renamed. Use Find for the same results.")]
-        public T ObjectForPrimaryKey<T>(Int64 id) where T : RealmObject
+        public T ObjectForPrimaryKey<T>(long id) where T : RealmObject
         {
             return Find<T>(id);
         }
-
 
         /// <summary>
         /// Fast lookup of an object from a class which has a PrimaryKey property.
@@ -461,7 +460,6 @@ namespace Realms
             return Find<T>(id);
         }
 
-
         /// <summary>
         /// Fast lookup of an object for dynamic use, from a class which has a PrimaryKey property.
         /// </summary>
@@ -470,11 +468,10 @@ namespace Realms
         /// <returns>Null or an object matdhing the id.</returns>
         /// <exception cref="RealmClassLacksPrimaryKeyException">If the RealmObject class lacks an [PrimaryKey].</exception>
         [Obsolete("This method has been renamed. Use Find for the same results.")]
-        public RealmObject ObjectForPrimaryKey(string className, Int64 id)
+        public RealmObject ObjectForPrimaryKey(string className, long id)
         {
             return Find(className, id);
         }
-
 
         /// <summary>
         /// Fast lookup of an object for dynamic use, from a class which has a PrimaryKey property.
@@ -506,7 +503,7 @@ namespace Realms
         /// <summary>
         ///  Closes the Realm if not already closed. Safe to call repeatedly.
         /// </summary>
-        //[ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
+        //// [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         [Obsolete("This method has been deprecated. Instead, dispose the realm to close it.")]
         public void Close()
         {
